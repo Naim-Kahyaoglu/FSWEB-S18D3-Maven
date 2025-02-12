@@ -15,9 +15,37 @@ public class Operation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "patient_id")
-    private long patientId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
-    @Column(name = "doctor_id")
-    private long doctorId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
+
+    // Convenience getter for patientId
+    public long getPatientId() {
+        return patient != null ? patient.getId() : 0;
+    }
+
+    // Convenience setter for patientId
+    public void setPatientId(long patientId) {
+        if (this.patient == null) {
+            this.patient = new Patient();
+        }
+        this.patient.setId(patientId);
+    }
+
+    // Convenience getter for doctorId
+    public long getDoctorId() {
+        return doctor != null ? doctor.getId() : 0;
+    }
+
+    // Convenience setter for doctorId
+    public void setDoctorId(long doctorId) {
+        if (this.doctor == null) {
+            this.doctor = new Doctor();
+        }
+        this.doctor.setId(doctorId);
+    }
 }
